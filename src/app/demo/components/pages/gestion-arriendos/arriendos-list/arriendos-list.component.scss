@@ -1,0 +1,24 @@
+.caption-container {
+    padding: 10px; /* ajusta el relleno según sea necesario */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 5px;
+  }
+
+  .grid-container3{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 5px;
+  }
+  
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    //border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 14px;
+    //width: 100%;
+    // text-align: center;
+  }

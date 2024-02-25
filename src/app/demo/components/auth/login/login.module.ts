@@ -4,11 +4,18 @@ import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { MaterialModule } from 'src/app/material.module';
+import { AlertHelper } from 'src/app/shared/components/helpers/alert.helpers';
+import { MessageModule } from 'primeng/message';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
+    providers: [
+            MessageService
+    ],
     imports: [
         CommonModule,
         LoginRoutingModule,
@@ -16,7 +23,12 @@ import { InputTextModule } from 'primeng/inputtext';
         CheckboxModule,
         InputTextModule,
         FormsModule,
-        PasswordModule
+        PasswordModule,
+        MaterialModule,
+        LoginRoutingModule,
+        ReactiveFormsModule,
+        MessageModule
+        
     ],
     declarations: [LoginComponent]
 })
