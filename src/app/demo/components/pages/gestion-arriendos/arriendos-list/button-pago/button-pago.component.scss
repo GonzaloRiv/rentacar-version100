@@ -1,0 +1,40 @@
+.caption-container {
+    padding: 10px; /* ajusta el relleno según sea necesario */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 5px;
+  }
+
+  .grid-container3{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 5px;
+  }
+  
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    //border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 14px;
+    //width: 100%;
+    // text-align: center;
+  }
+
+//   ::ng-deep .p-button{
+//     width: 100%;
+//   }
+
+.card {
+    opacity: 0;
+    height: 0; /* Establece la altura a cero cuando está oculto */
+    overflow: hidden; /* Oculta cualquier contenido que se desborda */
+    transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out; /* Aplica una transición suave */
+  }
+  
+  .card.visible {
+    opacity: 1;
+    height: auto; /* Restablece la altura a automático cuando está visible */
+  }

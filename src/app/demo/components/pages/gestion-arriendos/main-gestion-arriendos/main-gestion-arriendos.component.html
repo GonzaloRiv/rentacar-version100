@@ -1,0 +1,27 @@
+<div class="animate__animated animate__fadeInRight">
+    <div class="col">
+        <p-card>
+            <h1 style="margin: 0px;">Modulo atención / Registro y gestión de arriendo</h1>
+        </p-card>
+    </div>
+  
+  </div>
+
+
+  <mat-card class="mat-elevation-z5 mat_card_trabajadores_content">
+	<mat-tab-group class="card_group_trabajadores">
+		<mat-tab label="REGISTRO DE ARRIENDO">
+			<app-agregar-arriendos></app-agregar-arriendos>
+		</mat-tab>
+		<mat-tab label="ARRIENDOS EN PROCESO">
+			<div class="overflow-hidden">
+				<app-arriendos-list></app-arriendos-list>
+			</div>
+		</mat-tab>
+		<mat-tab label="TODOS LOS ARRIENDOS">
+			<div class="overflow-hidden">
+				este otro es otro
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+</mat-card>

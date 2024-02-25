@@ -1,0 +1,795 @@
+<!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+  </button> -->
+  <p-toast></p-toast>
+
+<mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+
+        <ng-template matStepLabel>Datos de arriendo</ng-template>
+        <fieldset legend="Datos de arriendo" class="m-3 myfieldset">
+            <legend>Datos de arriendo</legend>
+
+
+            <!-- <div class="col" style="display: flex;"> -->
+               <div class="grid-container">
+                <div class="grid-item">
+                    <div class="flex flex-column gap-2">
+                        <label>Tipo de arriendo</label>
+                        <p-dropdown placeholder="Seleccione empresa" appendTo="body" [options]="tiposArriendo"
+                        [(ngModel)]="selectedTipoArriendo"></p-dropdown>
+                    </div>
+                </div>
+               </div>
+
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="selectedCiudadEntrega">Sucursal entrega</label>
+                            <p-dropdown placeholder="Seleccione empresa" appendTo="body" [options]="sucursales"
+                            optionLabel="nombre_sucursal" [(ngModel)]="selectedCiudadEntrega"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="selectedCiudadEntrega">Sucursal de recepción</label>
+                            <p-dropdown placeholder="Seleccione empresa" appendTo="body" [options]="sucursales"
+                            optionLabel="nombre_sucursal" [(ngModel)]="selectedCiudadRecepcion"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputFechaEntrega">Fecha de entrega</label>
+                            <p-calendar [(ngModel)]="inputFechaEntrega" [iconDisplay]="'input'" appendTo="body" (ngModelChange)="onFechaEntregaChange()" [showTime]="true"
+                            [showIcon]="true"></p-calendar>
+                            
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputFechaRecepcion">Fecha de recepción</label>
+                            <p-calendar [(ngModel)]="inputFechaRecepcion" appendTo="body" [iconDisplay]="'input'" (ngModelChange)="onFechaRecepcionChange()" [showTime]="true"
+                            [showIcon]="true"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputNdias">N° días</label>
+                            <input pInputText [(ngModel)]="inputNdias" disabled/>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputFechaRecepcion">Seleccionar agencia responsable</label>
+                            <p-dropdown placeholder="Seleccione la agencia" appendTo="body" [options]="sucursales"
+                            optionLabel="nombre_sucursal" [(ngModel)]="selectedAgenciaResponsable"></p-dropdown>
+                        </div>
+                    </div>
+                </div>
+
+       
+
+        </fieldset>
+
+        <div>
+            <button class="buttonNew" mat-button matStepperNext>Siguiente <i
+                    class="ml-2 fa-solid fa-arrow-right-long"></i></button>
+        </div>
+
+    </mat-step>
+
+    <!--Segundo Step-->
+    <mat-step [stepControl]="secondFormGroup" label="Datos de cliente">
+
+        <fieldset class="myfieldset">
+            <legend>Datos de cliente</legend>
+
+            <div class="col" *ngIf="selectedTipoArriendo=='REEMPLAZO'">
+                <h2>Datos empresa de reemplazo</h2>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2 dropdownNew">
+
+                            <label for="inputEmpresaReemplazo">Empresas de reemplazo</label>
+
+                            <p-dropdown placeholder="Seleccione empresa" [options]="empresasReemplazo"
+                                optionLabel="codigo_empresaRemplazo" [(ngModel)]="selectedEmpresaReemplazo"></p-dropdown>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col" *ngIf="selectedTipoArriendo === 'PARTICULAR' || selectedTipoArriendo === 'REEMPLAZO'">
+                <div class="message-container">
+                    <p-messages [(value)]="messages1" [enableService]="false" [closable]="true"></p-messages>
+                </div>
+            <p-toast></p-toast>
+                <h2>Datos cliente</h2>
+
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputEmpresaReemplazo">Rut o pasaporte (ej: 12.345.678-9)</label>
+                            <p-inputGroup>
+                                <input type="text" pInputText placeholder="Ingrese rut" [(ngModel)]="inputRut" />
+                                <button type="button" pButton icon="pi pi-search" class="p-button-warning" (click)="buscarCliente()"></button>
+                                <div class="flex align-items-center gap-1">
+                                    <p-checkbox class="ml-2" [(ngModel)]="checkConductor" value="Conductor"
+                                     (ngModelChange)="conductorOnChange($event)" ></p-checkbox>
+                                    <label>Conductor</label>
+                                </div>
+                           </p-inputGroup>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputEmpresaReemplazo">Nacionalidad</label>
+                            <p-dropdown [options]="nacionalidad" optionLabel="nombre" [(ngModel)]="selectedNacionalidad"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <!--este es otro grid item-->
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Nombre completo</label>
+                            <input pInputText [(ngModel)]="inputNombreCliente" />
+                        </div>
+                    </div>
+                    <div class="grid-item">
+
+                        <div class="flex flex-column gap-2">
+                            <label>Dirección</label>
+                            <input pInputText [(ngModel)]="inputDireccionCliente"  />
+                        </div>
+                    </div>
+                    <!--otro grid-->
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Fecha de nacimiento</label>
+                            <p-calendar [iconDisplay]="'input'" appendTo="body" [(ngModel)]="selectedFechaNacCliente" [showIcon]="true" readonly></p-calendar>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Estado civil</label>
+                            <p-dropdown placeholder="Seleccione Estado civil" [options]="estadoCivil" optionLabel="nombre" [(ngModel)]="selectedEstadoCivil"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <!--este es otro grid-->
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Región</label>
+                            <p-dropdown [options]="regiones" optionLabel="NombreRegion" [(ngModel)]="selectedRegion" (onChange)="onRegionChange()">
+                        
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Ciudad</label>
+                             <p-dropdown [options]="comunas" [(ngModel)]="selectedComuna"></p-dropdown>
+                           
+                        </div>
+                    </div>
+
+                    <!--Este es otro grid-->
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>N° Teléfono</label>
+                            <input pInputText [(ngModel)]="inputTelefonoCliente" />
+                        </div>
+                    </div>
+                    <div class="grid-item">
+
+                        <div class="flex flex-column gap-2">
+                            <label>Correo Electrónico</label>
+                            <input pInputText [(ngModel)]="inputCorreoCliente" />
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="grid-container">
+                            <div class="grid-item">
+                                <div class="flex flex-column">
+                                    <p-inputSwitch
+                                        [(ngModel)]="checked"></p-inputSwitch>
+
+                                </div>
+                            </div>
+                            <div class="grid-item" style="display: flex; align-items: center;">
+                                <div class="fondo">
+                                    Tiene antecedentes penales?
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col" *ngIf="selectedTipoArriendo=='EMPRESA'">
+                <h2>Datos Empresa</h2>
+                <div class="message-container">
+                    <p-messages [(value)]="messages2" [enableService]="false" [closable]="true"></p-messages>
+                </div>
+
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputEmpresaReemplazo">Rut o pasaporte (ej: 12.345.678-9)</label>
+                            <p-inputGroup>
+                                <input type="text" pInputText placeholder="Ingrese rut" [(ngModel)]="rutEmpresa"/>
+                                <button type="button" pButton icon="pi pi-search" class="p-button-warning" (click)="buscarDatosEmpresa()"></button>
+                            </p-inputGroup>
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Nombre</label>
+                            <input pInputText [(ngModel)]="nombreEmpresa"/>
+                        </div>
+                    </div>
+
+
+                    <!--este es otro grid item-->
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Correo electrónico</label>
+                            <input pInputText  [(ngModel)]="correoEmpresa"/>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+
+                        <div class="flex flex-column gap-2">
+                            <label>Dirección comercial</label>
+                            <input pInputText  [(ngModel)]="direccionEmpresa"/>
+                        </div>
+                    </div>
+                    <!--otro grid-->
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputEmpresaReemplazo">Región</label>
+                            <p-dropdown [options]="regiones" optionLabel="NombreRegion" [(ngModel)]="selectedRegion" (onChange)="onRegionChange()">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label for="inputEmpresaReemplazo">Ciudad</label>
+                             <p-dropdown [options]="comunas" [(ngModel)]="selectedComuna"></p-dropdown>
+                           
+                        </div>
+                    </div>
+
+                    <!--Este es otro grid-->
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>N° Teléfono</label>
+                            <input pInputText  [(ngModel)]="telefonoEmpresa"/>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+
+                        <div class="flex flex-column gap-2">
+                            <label for="inputVigencia">Vigencia</label>
+                             <p-dropdown [options]="vigencia" [(ngModel)]="aniosVigencia"></p-dropdown>
+                           
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Rol o rubro</label>
+                            <input pInputText  [(ngModel)]="rolEmpresa"/>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="col" *ngIf="selectedTipoArriendo=='EMPRESA'">
+                <h2>Datos Representante Legal</h2>
+
+                <div class="grid-container">
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Rut representante legal</label>
+                            <input pInputText  [(ngModel)]="rutRepresentante" />
+                        </div>
+                    </div>
+
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Nombre representante legal</label>
+                            <input pInputText  [(ngModel)]="nombre_representante" />
+                        </div>
+                    </div>
+                    <div class="grid-item">
+
+                        <div class="flex flex-column gap-2">
+                            <label>Correo electrónico representante legal</label>
+                            <input pInputText  [(ngModel)]="correo_representante" />
+                        </div>
+                    </div>
+
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>N° Teléfono representante legal</label>
+                            <input pInputText  [(ngModel)]="telefono_representante" />
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+            <div class="col" *ngIf="selectedTipoArriendo=='EMPRESA'">
+                <h2>Datos Finanzas</h2>
+
+                <div class="grid-container">
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Rut Finanzas</label>
+                            <input pInputText  [(ngModel)]="rut_finanzas" />
+                        </div>
+                    </div>
+
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Nombre Finanzas</label>
+                            <input pInputText  [(ngModel)]="nombreFinanzas" />
+                        </div>
+                    </div>
+                    <div class="grid-item">
+
+                        <div class="flex flex-column gap-2">
+                            <label>Correo electrónico Finanzas</label>
+                            <input pInputText   [(ngModel)]="correoFinanzas"/>
+                        </div>
+                    </div>
+
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>N° Teléfono Finanzas</label>
+                            <input pInputText  [(ngModel)]="telefonoFinanzas" />
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </fieldset>
+        <div class="mt-3">
+            <button class="buttonNew" mat-button matStepperPrevious> <i
+                    class="mr-2 fa-solid fa-arrow-left-long"></i>Atrás</button>
+            <button class="buttonNew" mat-button matStepperNext>Siguiente <i
+                    class="ml-2 fa-solid fa-arrow-right-long"></i></button>
+        </div>
+
+    </mat-step>
+
+    <!--Tercer paso-->
+    <mat-step [stepControl]="secondFormGroup" label="Datos de conductor">
+
+        <fieldset legend="Datos de arriendo" class="m-3 myfieldset">
+            <legend>Datos conductor</legend>
+
+            <div class="col">
+                <h2>Datos Conductor Asignado</h2>
+                <div class="message-container">
+                    <p-messages [(value)]="messages3" [enableService]="false" [closable]="true"></p-messages>
+                </div>
+
+
+                <div class="flex flex-wrap gap-3 mt-5 mb-4">
+                    <label>
+                        <input type="radio" name="radio-button" value="conductor1" [(ngModel)]="selectedConductor"
+                            (change)="onRadioButtonChange($event)" checked />
+                        <span class="spanConductores">1 Conductor</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="radio-button" value="conductor2" [(ngModel)]="selectedConductor"
+                            (change)="onRadioButtonChange($event)" />
+                        <span class="spanConductores">2 Conductores</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="radio-button" value="conductor3" [(ngModel)]="selectedConductor"
+                            (change)="onRadioButtonChange($event)" />
+                        <span class="spanConductores">3 Conductores</span>
+                    </label>
+                </div>
+
+
+
+                <div class="grid-container" *ngIf="optionConductor1">
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Rut (ej: 12.345.678-9)</label>
+                            <p-inputGroup>
+                                <input type="text" pInputText placeholder="Ingrese rut" [(ngModel)]="rutConductor1" />
+                                <button pButton type="button" icon="pi pi-search" class="p-button-warning" (click)="buscarConductor()"></button>
+
+                           </p-inputGroup>
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Nacionalidad</label>
+                            <p-dropdown [(ngModel)]="nacionalidadConductor1" [options]="nacionalidad" optionLabel="nombre"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Nombre completo</label>
+                            <input pInputText  [(ngModel)]="nombreConductor1" />
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>VCTO</label>
+                            <p-calendar [iconDisplay]="'input'" appendTo="body" [showIcon]="true" readonly [(ngModel)]="vctoConductor1"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+
+                        <div class="flex flex-column gap-2">
+                            <label>Dirección</label>
+                            <input pInputText  [(ngModel)]="dirConductor1"/>
+                        </div>
+                    </div>
+
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>N° Teléfono</label>
+                            <input pInputText  [(ngModel)]="telefonoConductor1"/>
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Clase</label>
+                            <p-dropdown appendTo="body" [options]="clases" optionLabel="label" [(ngModel)]="selectedclaseConductor1"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Número de serie</label>
+                            <input pInputText [(ngModel)]="nSerieConductor1">
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <div class="flex flex-column gap-2">
+                            <label>Municipalidad</label>
+                            <input pInputText [(ngModel)]="municipalidadConductor1">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 text-center" *ngIf="optionConductor2">
+                    <h2>Conductor 2</h2>
+                    <div class="message-container">
+                        <p-messages [(value)]="messages4" [enableService]="false" [closable]="true"></p-messages>
+                    </div>
+                        <div class="grid-container ">
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <label for="inputEmpresaReemplazo">Rut (ej: 12.345.678-9)</label>
+                                    <p-inputGroup>
+                                        <input type="text" pInputText placeholder="Ingrese rut" [(ngModel)]="rutConductor2" />
+                                        <button type="button" pButton icon="pi pi-search" class="p-button-warning" (click)="buscarConductor2()"></button>
+    
+                                    </p-inputGroup>
+                                </div>
+                            </div>
+    
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <label>Nacionalidad</label>
+                                    <p-dropdown [(ngModel)]="nacionalidadConductor2" appendTo="body" [options]="nacionalidad" optionLabel="nombre"></p-dropdown>
+                                </div>
+                            </div>
+    
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <label>Nombre completo</label>
+                                    <input pInputText  [(ngModel)]="nombreConductor2" />
+                                </div>
+                            </div>
+    
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <label>VCTO</label>
+                                    <p-calendar [iconDisplay]="'input'" appendTo="body" [showIcon]="true" readonly [(ngModel)]="vctoConductor2"></p-calendar>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+    
+                                <div class="flex flex-column gap-2">
+                                    <label>Dirección</label>
+                                    <input pInputText  [(ngModel)]="dirConductor2"/>
+                                </div>
+                            </div>
+    
+    
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <label>N° Teléfono</label>
+                                    <input pInputText  [(ngModel)]="telefonoConductor2"/>
+                                </div>
+                            </div>
+    
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <label>Clase</label>
+                                    <p-dropdown [options]="clases" optionLabel="label" appendTo="body" [(ngModel)]="selectedclaseConductor2"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <label>Número de serie</label>
+                                    <input pInputText [(ngModel)]="nSerieConductor2">
+                                </div>
+                            </div>
+    
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <label>Municipalidad</label>
+                                    <input pInputText [(ngModel)]="municipalidadConductor2">
+                                </div>
+                            </div>
+    
+                        </div>
+              
+                </div>
+
+                <div class="mt-4 text-center" *ngIf="optionConductor3">
+                 
+                    <h2>Conductor 3</h2>
+                    <div class="message-container">
+                        <p-messages [(value)]="messages5" [enableService]="false" [closable]="true"></p-messages>
+                    </div>
+                    <div class="grid-container ">
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <label for="inputEmpresaReemplazo">Rut (ej: 12.345.678-9)</label>
+                                <p-inputGroup>
+                                    <input type="text" pInputText placeholder="Ingrese rut" [(ngModel)]="rutConductor3" />
+                                    <button type="button" pButton icon="pi pi-search" class="p-button-warning" (click)="buscarConductor3()"></button>
+
+                                </p-inputGroup>
+                            </div>
+                        </div>
+
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <label>Nacionalidad</label>
+                                <p-dropdown [(ngModel)]="nacionalidadConductor3" appendTo="body" [options]="nacionalidad" optionLabel="nombre"></p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <label>Nombre completo</label>
+                                <input pInputText  [(ngModel)]="nombreConductor3" />
+                            </div>
+                        </div>
+
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <label>VCTO</label>
+                                <p-calendar [iconDisplay]="'input'" appendTo="body" [showIcon]="true" readonly [(ngModel)]="vctoConductor3"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="grid-item">
+
+                            <div class="flex flex-column gap-2">
+                                <label>Dirección</label>
+                                <input pInputText  [(ngModel)]="dirConductor3"/>
+                            </div>
+                        </div>
+
+
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <label>N° Teléfono</label>
+                                <input pInputText  [(ngModel)]="telefonoConductor3"/>
+                            </div>
+                        </div>
+
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <label>Clase</label>
+                                <p-dropdown [options]="clases" optionLabel="label" appendTo="body" [(ngModel)]="selectedclaseConductor3"></p-dropdown>
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <label>Número de serie</label>
+                                <input pInputText [(ngModel)]="nSerieConductor3">
+                            </div>
+                        </div>
+
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <label>Municipalidad</label>
+                                <input pInputText [(ngModel)]="municipalidadConductor3">
+                            </div>
+                        </div>
+
+                    </div>
+               
+                </div>
+            </div>
+        </fieldset>
+        <div>
+            <button class="buttonNew" mat-button matStepperPrevious> <i
+                    class="mr-2 fa-solid fa-arrow-left-long"></i>Atrás</button>
+            <button class="buttonNew" mat-button matStepperNext>Siguiente <i
+                    class="ml-2 fa-solid fa-arrow-right-long"></i></button>
+        </div>
+
+    </mat-step>
+
+    <!--Cuarto paso-->
+    <mat-step [stepControl]="secondFormGroup" label="Selección de vehículo">
+        <fieldset class="myfieldset">
+            <legend>Selección de vehículo</legend>
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <h2>Seleccion de vehículo</h2>
+                    <div style="display: flex;">
+                    <p-dropdown optionLabel="marca_vehiculo" [filter]="true" appendTo="body" [options]="vehiculosDisponibles" (ngModelChange)="vehiculoOnChange($event)"  filterBy="name" [showClear]="true" [(ngModel)]="selectedVehiculo" placeholder="Seleccione un vehículo">
+                    </p-dropdown>
+                    <p-button class="ml-2" icon="pi pi-refresh" [rounded]="true" [text]="true"></p-button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h2>Kilómetros</h2>
+       <div class="grid-container3">
+        <div class="grid-item">
+            <div class="flex flex-column gap-2">
+                <label>Kilometraje Actual</label>
+                <input pInputText disabled [(ngModel)]="kilometraje_actual">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="flex flex-column gap-2">
+                <label>Kilometros ultima mantención</label>
+                <input pInputText disabled [(ngModel)]="kilometrajeUltMantencion">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="flex flex-column gap-2">
+                <label>Kilometros siguiente mantención (aprox)</label>
+                <input pInputText disabled [(ngModel)]="kilometrajeProxMantencion">
+            </div>
+        </div>
+
+
+               
+           
+       </div>
+       <div class="mb-4 mt-3 mr-2" style="display: flex; justify-content: flex-end;">
+       <button pButton pRipple label="Registrar" icon="pi pi-check" class="p-button-text" (click)="openNew()"></button>
+    </div>
+    </div>
+</fieldset>
+            <div>
+                <button class="buttonNew mt-3" mat-button matStepperPrevious> <i
+                        class="mr-2 fa-solid fa-arrow-left-long"></i>Atrás</button>
+                <!-- <button class="buttonNew" mat-button matStepperNext>Siguiente <i class="ml-2 fa-solid fa-arrow-right-long"></i></button> -->
+            </div>
+        
+    </mat-step>
+</mat-stepper>
+
+<p-dialog [(visible)]="registroArriendo" [style]="{width: '450px'}" header="" [modal]="true" styleClass="p-fluid" [appendTo]="'body'">
+    <ng-template pTemplate="content">
+        <div class="text-center">
+
+                <i class="pi pi-exclamation-circle mb-4" style="font-size: xxx-large; color: deepskyblue;"></i>
+                <h1>Protocolo de arriendo</h1>
+           
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">TIPO DE ARRIENDO : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for=""> {{ selectedTipoArriendo }} </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">CLIENTE : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for=""> {{ inputNombreCliente | uppercase }} </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">RUT : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for=""> {{ inputRut }} </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">ENTREGA : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for="">{{ selectedCiudadEntrega.nombre_sucursal }}</label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">RECEPCIÓN : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for="">{{ selectedCiudadRecepcion.nombre_sucursal }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <h1>Verifique que los datos sean correctos</h1>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cerrar" icon="pi pi-times" class="p-button-text"(click)="hideDialog()" ></button>
+        <button pButton pRipple label="Aceptar" icon="pi pi-check" class="p-button-text" (click)="registrarArriendo()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

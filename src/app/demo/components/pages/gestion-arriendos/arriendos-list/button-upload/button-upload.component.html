@@ -1,0 +1,464 @@
+    <h2 mat-dialog-title>Detalle de arriendo N°{{ id_arriendo }}</h2>
+    <mat-dialog-content class="mat-typography">
+        <div class="grid-container4">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Tipo</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.tipo_arriendo">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Estado</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.estado_arriendo">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Cliente</label>
+                    <input pInputText disabled [(ngModel)]="cliente">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Conductor</label>
+                    <input pInputText disabled [(ngModel)]="conductor">
+                </div>
+            </div>
+
+            <!--Segunda fila
+            -->
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Vehiculo</label>
+                    <input pInputText disabled [(ngModel)]="vehiculo">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Sucursal entrega</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.ciudadEntrega_arriendo">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Sucursal recepción</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.ciudadRecepcion_arriendo">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Kilometros inicio</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.kilometrosSalida_arriendo">
+                </div>
+            </div>
+
+
+
+            <!--Tercera fila-->
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Kilometros término</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.kilometrosEntrada_arriendo">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Fecha despacho</label>
+                    <input pInputText disabled value="{{ arriendosModel.fechaEntrega_arriendo | dayOfWeek}},  {{ arriendosModel.fechaEntrega_arriendo | date: 'dd/MM/yyyy HH:mm'}}">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Fecha recepción</label>
+                    <input pInputText disabled value="{{ arriendosModel.fechaRecepcion_arriendo | dayOfWeek }}, {{ arriendosModel.fechaRecepcion_arriendo | date: 'dd/MM/yyyy HH:mm'}}">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Total Días</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.diasActuales_arriendo">
+                </div>
+            </div>
+
+
+            <!--Cuarta fila-->
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Días reales uso</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.diasRealesUsados">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Sucursal</label>
+                    <input pInputText disabled [(ngModel)]="sucursal">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Garantía</label>
+                    <input pInputText disabled [(ngModel)]="arriendosModel.garantia">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Vendedor</label>
+                    <input pInputText disabled [(ngModel)]="vendedor">
+                </div>
+            </div>
+
+
+            <!--Quinta fila-->
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Usuario</label>
+                    <input pInputText disabled [(ngModel)]="usuario">
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label>Fecha registro</label>
+                    <input pInputText disabled value=" {{ fechaRegistro | dayOfWeek }}, {{ fechaRegistro | date: 'dd/MM/yyyy HH:mm' }}">
+                </div>
+            </div>
+         <br>
+
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="d-flex mt-3">
+                    <button *ngIf="carnetFrontal_requisito != null" (click)="getDocumento(carnetFrontal_requisito)" label="Carnet Frontal"  class="modern-button mr-2">Carnet Frontal</button>
+                    <button *ngIf="carnetTrasera_requisito != null" (click)="getDocumento(carnetTrasera_requisito)" label="Carnet Trasera" class="modern-button mr-2">Carnet Trasera</button>
+                    <button *ngIf="comprobanteDomicilio_requisito != null" (click)="getDocumento(comprobanteDomicilio_requisito)" label="Comprobante Domicilio" class="modern-button mr-2">Comprobante Domicilio</button>
+                    <button *ngIf="licenciaConducirFrontal_requisito != null" (click)="getDocumento(licenciaConducirFrontal_requisito)" label="Licencia Conducir Frontal" class="modern-button mr-2">Licencia Conducir Frontal</button>
+                    <button *ngIf="licenciaConducirTrasera_requisito != null" (click)="getDocumento(licenciaConducirTrasera_requisito)" label="Licencia Conducir Trasera" class="modern-button mr-2">Licencia Conducir Trasera</button>
+                </div>
+        </div> 
+    </div>
+
+    
+    <div class="card mt-5" *ngIf="visualizador">
+        <div class="col">
+            <h2>Visualizador</h2>
+            <p-image [src]="visualizador" alt="Image" width="250" [preview]="true"></p-image>
+        </div>
+    </div>
+      
+
+    <div class="card mt-5">
+        <h1>Datos Garantía</h1>
+
+        <div class="flex flex-wrap gap-3 mt-5 mb-4">
+            <label>
+                <input type="radio" name="radio-button" value="efectivo" 
+                    (change)="onRadioButtonChange($event)" checked />
+                <span class="spanConductores">Efectivo</span>
+            </label>
+
+            <label>
+                <input type="radio" name="radio-button" value="cheque" 
+                    (change)="onRadioButtonChange($event)" />
+                <span class="spanConductores">Cheque</span>
+            </label>
+
+            <label>
+                <input type="radio" name="radio-button" value="tarjeta"
+                    (change)="onRadioButtonChange($event)" />
+                <span class="spanConductores">Tarjeta</span>
+            </label>
+        </div>
+
+         <div class="grid-container" *ngIf="selectedGarantiaEfectivo">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <p-inputGroup>
+                        <p-inputGroupAddon>Abono $</p-inputGroupAddon>
+                        <p-dropdown [options]="Abonos" optionLabel="label" [(ngModel)]="selectedAbono"></p-dropdown>
+                        <input type="text" pInputText [(ngModel)]="inputAbono">
+                    </p-inputGroup>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container3" *ngIf="selectedGarantiaCheque">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <h3>Cheque</h3>
+                    <p-inputGroup>
+                        <input type="text" placeholder="N° Cheque" [(ngModel)]="n_cheque" pInputText>
+                        <input type="text" placeholder="Emisor Cheque" [(ngModel)]="emisorCheque" pInputText>
+                        <input type="text" placeholder="Codigo autorización" [(ngModel)]="codigoAutorizacion" pInputText>
+                    </p-inputGroup>
+                </div>
+            </div>
+        </div> 
+
+        <div class="grid-container4" *ngIf="selectedGarantiaTarjeta">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <h3>Número de operación</h3>
+                    <p-inputGroup>
+                        <input type="text" placeholder="N° Tarjeta de crédito" [(ngModel)]="nTarjeta" pInputText>
+                        <input type="text" placeholder="ej: 01/01" [(ngModel)]="fechaVencimiento" pInputText>
+                        <input type="text" pInputText value="{{ id_arriendo }}">
+                        <input type="text" placeholder="Código de Transbank" [(ngModel)]="codigoTransbank" pInputText>
+                    </p-inputGroup>
+                    <p-inputGroup>
+                        <p-inputGroupAddon>Abono $</p-inputGroupAddon>
+                        <p-dropdown [options]="Abonos" optionLabel="label" [(ngModel)]="abonoTarjeta"></p-dropdown>
+                    </p-inputGroup>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card mt-5">
+        <h2>Adjuntar garantía</h2>
+
+        <div class="grid-container" *ngIf="selectedGarantiaEfectivo">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                  
+                  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Foto comprobante efectivo</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                      <div class="col">
+
+                        <p-toast></p-toast>
+                            <p-fileUpload (onSelect)="onUploadComprobante($event)" chooseLabel="Seleccionar" uploadLabel="Subir" cancelLabel="Cancelar" [multiple]="true" accept="image/*" maxFileSize="1000000">
+                                <ng-template pTemplate="content">
+                                    <ul *ngIf="uploadedFiles.length">
+                                        <li *ngFor="let file of uploadedFilesComprobante">{{ file.name }} - {{ file.size }} bytes</li>
+                                    </ul>
+                                </ng-template>
+                            </p-fileUpload>
+                            <br />
+                       
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Foto comprobante cheque -->
+        <div class="grid-container" *ngIf="selectedGarantiaCheque">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                  
+                  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Foto comprobante cheque</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                      <div class="col">
+
+                        <div>
+                            <p-fileUpload mode="basic" chooseLabel="Seleccionar" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUploadComprobante($event)"></p-fileUpload>
+                        </div>
+                        <br />
+                       
+                      </div>
+                    </div>
+                    <br />
+                    <h3>Imagen Previsualizacion</h3>
+                    <hr />
+                    <div class="row">
+
+                      <div class="col" *ngIf="previsualizacion">
+                        <img width="200px" [src]="previsualizacion" alt="img" />
+                      </div>
+                    </div>
+                    <hr />
+                  </mat-expansion-panel>
+                </div>
+            </div>
+        </div>
+
+        <!--Fotos comprobante Tarjeta-->
+        <div class="grid-container" *ngIf="selectedGarantiaTarjeta">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                  
+                  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Foto comprobante Tarjeta</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                      <div class="col">
+                        <div>
+                            <p-fileUpload mode="basic" chooseLabel="Seleccionar" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUploadComprobante($event)"></p-fileUpload>
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                    <br />
+                    <h3>Imagen Previsualizacion</h3>
+                    <hr />
+                    <div class="row">
+
+                      <div class="col" *ngIf="previsualizacion">
+                        <img width="200px" [src]="previsualizacion" alt="img" />
+                      </div>
+                    </div>
+                    <hr />
+                  </mat-expansion-panel>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                  <h2>Adjuntar Documentos</h2>
+                  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Subir archivos</mat-panel-title>
+                    </mat-expansion-panel-header>
+                
+
+                    <div class="card">
+                        <div *ngIf="carnetFrontal_requisito==null">
+                        <h3>Foto carnet - conductor</h3>
+                        <div class="grid-container">
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <p-fileUpload mode="basic" chooseLabel="Foto Frontal" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <p-fileUpload mode="basic" chooseLabel="Foto Trasera" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <hr>
+                        <div *ngIf="licenciaConducirFrontal_requisito==null">
+                        <h3>Foto Licencia de conducir - conductor</h3>
+                        <div class="grid-container">
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <p-fileUpload mode="basic" chooseLabel="Foto Frontal" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="flex flex-column gap-2">
+                                    <p-fileUpload mode="basic" chooseLabel="Foto Trasera" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="card" *ngIf="rutConductor2!=null">
+                    <h3>Foto carnet - conductor 2</h3>
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <p-fileUpload mode="basic" chooseLabel="Foto Frontal" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <p-fileUpload mode="basic" chooseLabel="Foto Trasera" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h3>Foto Licencia de conducir - conductor 2</h3>
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <p-fileUpload mode="basic" chooseLabel="Foto Frontal" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <p-fileUpload mode="basic" chooseLabel="Foto Trasera" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" *ngIf="rutConductor3!=null">
+                    <h3>Foto carnet - conductor 3</h3>
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <p-fileUpload mode="basic" chooseLabel="Foto Frontal" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <p-fileUpload mode="basic" chooseLabel="Foto Trasera" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h3>Foto Licencia de conducir - conductor 3</h3>
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <p-fileUpload mode="basic" chooseLabel="Foto Frontal" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <div class="flex flex-column gap-2">
+                                <p-fileUpload mode="basic" chooseLabel="Foto Trasera" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  </mat-expansion-panel>
+
+                  <div *ngIf="arriendosModel.tipo_arriendo === 'REEMPLAZO'">
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <h3>Carta Empresa de Reemplazo</h3>
+                            <p-fileUpload mode="basic" chooseLabel="Escoger archivo" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                        </div>
+                    </div>
+
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <h3>Numero servicio o expediente (Carta reemplazo)</h3>
+                            <input type="text" pInputText>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="arriendosModel.tipo_arriendo === 'PARTICULAR'">
+                    <div class="grid-container mt-3">
+                        <div class="grid-item">
+                            <h3>Comprobante Domicilio</h3>
+                            <p-fileUpload mode="basic" chooseLabel="Escoger archivo" accept="image/*" type="file" maxFileSize="1000000" (onSelect)="onUpload($event)"></p-fileUpload>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+       
+        
+
+        
+
+        
+
+    </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <p-button label="Cerrar" icon="pi pi-times" [text]="true" mat-dialog-close severity="primary"></p-button>
+        <p-button label="Anular arriendo" icon="pi pi-trash" [text]="true" severity="primary"></p-button>
+      <p-button label="Guardar cambios" icon="pi pi-check" [text]="true" severity="primary" (click)="saveRegistros()"></p-button>
+    </mat-dialog-actions>
+    

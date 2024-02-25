@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="https://unpkg.com/@fullcalendar/common/main.css" />
+<link rel="stylesheet" href="https://unpkg.com/browse/@fullcalendar/daygrid@4.3.0/main.css" />
+
+<div class="mt-5">
+    <div class="col">
+        <div class="row">
+            <div class="row align-items-center">
+                <div class="col-12 col-sm-6">
+                    <p-dropdown [options]="sucursales" class="w-100" [(ngModel)]="selectedValueSucursal" optionLabel="text" optionValue="value" 
+                    placeholder="Seleccione Sucursal" (ngModelChange)="onSucursalChange($event)" [showClear]="true" [filter]="true" filterBy="nombre_sucursal"></p-dropdown>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="m-3 mt-5">
+<full-calendar [options]="options"></full-calendar>
+</div>

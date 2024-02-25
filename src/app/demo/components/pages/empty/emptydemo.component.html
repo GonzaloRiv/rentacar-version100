@@ -1,8 +1,33 @@
 <div class="grid">
     <div class="col-12">
         <div class="card">
-            <h4>Empty Page</h4>
-            <p>This is your empty page template to start building beautiful applications.</p>
+            <h3>Perfil de usuario</h3>
+            <div style="display: flex; justify-content: space-evenly;">
+                <div>
+                    <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png" styleClass="mr-4 mt-5" size="xlarge" shape="circle"></p-avatar>
+                    <h1 class="mt-5"><strong>{{ nombreUser | uppercase }}</strong></h1>
+                    <!-- <p>23 y media poniente 30 sur</p>
+                    <p>Talca, Región del Maule</p> -->
+                </div>
+                <div class="mb-5">
+                    <h2 style="color: rgb(39, 39, 166);"><strong>INFORMACIÓN DE USUARIO</strong></h2><hr>
+                    <p><strong>Correo: </strong> {{ correoUser | lowercase }}</p>
+                    <p><strong>Fecha registro: </strong>{{ registro | date:'dd/MM/yyyy' }}</p>
+                    <p><strong>ID Sucursal:</strong> {{ idSucursal }} ({{ sucursal }})</p>
+                    <p><strong>ID Usuario:</strong> {{ idUsuario }}</p>
+                    <p><strong>Rol:</strong> {{ role }}</p>
+                    <div style="display: flex;align-items: center;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%;background-color: green;"></div>
+                            <div class="ml-2">
+                            <p>ACTIVO</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p-divider></p-divider>
+
+            <h3><strong>Estadísticas de usuario</strong></h3>
+            
         </div>
     </div>
 </div>

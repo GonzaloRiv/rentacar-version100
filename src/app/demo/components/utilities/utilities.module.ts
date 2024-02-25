@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
     imports: [
         CommonModule,
         UtilitiesRoutingModule,
-        InputTextModule
+        InputTextModule,
     ],
     declarations: [IconsComponent]
 })

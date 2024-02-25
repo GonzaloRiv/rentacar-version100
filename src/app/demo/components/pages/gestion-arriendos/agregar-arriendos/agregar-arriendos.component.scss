@@ -1,0 +1,143 @@
+.myfieldset{
+    border: .5px solid rgb(247, 173, 146);
+    border-radius: 10px;
+}
+
+.myfieldset legend{
+    background-color: bisque;
+    color: coral;
+    padding: 13px;
+    border-radius: 8px;;
+    // font-weight: bold;
+    font-size: 17px;
+    margin-top: 20px!important;
+    margin-left: 20px;
+}
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+  .mat-mdc-form-field {
+    margin-top: 16px;
+  }
+
+  .newInput{
+    background-color: red;
+  }
+
+  .inputSwitch{
+    contain: inline-size;
+     display: flex;
+      align-items: center;
+  }
+  .buttonNew{
+    color: rgba(21, 36, 147, 0.773)!important;
+    font-weight: bold;
+    padding: 14px!important;
+    font-size: 13px;
+  }
+
+  .buttonNew:hover{
+    background-color: rgba(255, 255, 255, 0.079)!important;
+    border-radius: 5px;
+
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 5px;
+  }
+
+  .grid-container3{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 5px;
+  }
+  
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    //border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 14px;
+    //width: 100%;
+    // text-align: center;
+  }
+
+  .selects{
+    padding: 12px;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+  }
+
+.fondo{
+    color: rgba(237, 55, 55, 0.61);
+    display: flex;
+    align-items: center;
+   
+}
+
+::ng-deep .grid-item .flex .p-calendar {
+    width: 100%;
+}
+
+::ng-deep .p-dropdown{
+    width: 100%;
+}
+
+::ng-deep .p-calendar{
+    width: 100%;
+}
+
+::ng-deep .p-inputNumber{
+    width: 100%;
+}
+
+.content-input{
+	position: relative;
+	margin-bottom: 30px;
+	padding:5px 0 5px 60px; /* Damos un padding de 60px para posicionar el elemento <i> en este espacio*/
+	display: block;
+}
+ 
+/* pretty radio */
+label > input[type="radio"] {
+    display: none;
+  }
+  label > input[type="radio"] + *::before {
+    content: "";
+    display: inline-block;
+    vertical-align: bottom;
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-right: 0.3rem;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: gray;
+  }
+  label > input[type="radio"]:checked + * {
+    color: rgba(10, 98, 186, 0.798);
+  }
+  label > input[type="radio"]:checked + *::before {
+    background: radial-gradient(rgba(10, 98, 186, 0.798) 0%, rgba(10, 98, 186, 0.798) 40%, transparent 50%, transparent);
+    border-color: rgba(10, 98, 186, 0.798);
+  }
+  
+  label > input[type="radio"] + * {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+  }
+
+  .spanConductores{
+    display: flex!important; 
+    align-items: center;
+  }
+
+  .messages-container {
+    position: fixed!important;
+    top: 10px!important;
+    right: 10px!important;
+    z-index: 1000!important; /* Ajusta el z-index según sea necesario para que aparezca encima de otros elementos */
+  }
