@@ -1,0 +1,207 @@
+
+<div class="card">
+
+    <div class="card">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+            </span>
+        </div>
+    </div>
+
+    <p-table
+        #dt2
+        [value]="arriendosEnProceso"
+        dataKey="id"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [loading]="loading"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['id_arriendo', 'arriendo.cliente.nombre_cliente', 'arriendo.vehiulo.patente_vehiculo', 'arriendo.estado_arriendo']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        >
+        <!-- <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>         -->
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">N° Folio</th>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">Día Registro</th>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">Fecha Registro</th>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">Cliente</th>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">Vehiculo</th>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">Tipo arriendo</th>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">Estado</th>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">Sucursal</th>
+                <th style="width:auto; background-color: aliceblue; color: rgb(45, 118, 170);">Acciones</th>
+                <!-- <th style="width:8%">Verified</th> -->
+            </tr>
+            <tr>
+                <th style="background-color: aliceblue;">
+                    <p-columnFilter type="text" field="id_arriendo"></p-columnFilter>
+                </th>
+                <th style="background-color: aliceblue;">
+                    <p-columnFilter type="text" field="country.name"></p-columnFilter>
+                </th>
+                <th style="background-color: aliceblue;">
+                    <p-columnFilter type="text" field="createdAt"></p-columnFilter>
+                </th>
+                <th style="background-color: aliceblue;">
+                    <p-columnFilter type="text" field="cliente.nombre_cliente"></p-columnFilter>
+                </th>
+        
+                <th style="background-color: aliceblue;">
+                    <p-columnFilter type="text" field="vehiculo.patente_vehiculo"></p-columnFilter>
+                </th>
+                <th style="background-color: aliceblue;">
+                    <p-columnFilter type="text" field="tipo_arriendo"></p-columnFilter>
+                </th>
+                <th style="background-color: aliceblue;">
+                    <p-columnFilter type="text" field="estado_arriendo"></p-columnFilter>
+                </th>
+                <th style="background-color: aliceblue;">
+                    <p-columnFilter type="text" field="sucursale.nombre_sucursal"></p-columnFilter>
+                </th>
+                <th style="background-color: aliceblue;">
+                    
+                </th>
+                <!-- <th>
+                    <p-columnFilter type="boolean" field="verified"></p-columnFilter>
+                </th> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-arriendo>
+            <tr>
+                <td>
+                    {{ arriendo.id_arriendo }}
+                </td>
+                <td>
+                    <!-- <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" style="width: 20px" /> -->
+                    <span class="ml-1 vertical-align-middle">{{ arriendo.createdAt | dayOfWeek }}</span>
+                </td>
+                <td>
+                    <!-- <img [alt]="customer.representative.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" /> -->
+                    <span class="ml-1 vertical-align-middle">{{ arriendo.createdAt | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                </td>
+                <td>
+                    <span class="ml-1 vertical-align-middle">{{ arriendo.cliente?.nombre_cliente }}</span>
+                </td>
+                <td>
+                    <span class="ml-1 vertical-align-middle">{{ arriendo.vehiculo?.patente_vehiculo }}</span>
+                </td>
+             
+                <td>
+                    <span class="ml-1 vertical-align-middle">{{ arriendo.tipo_arriendo }}</span>
+                </td>
+                <td>
+                    <p-tag [value]="arriendo.estado_arriendo" [severity]="getSeverity(arriendo.estado_arriendo)"></p-tag>
+                </td>
+                <td>
+                    <span class="ml-1 vertical-align-middle">{{ arriendo.sucursale.nombre_sucursal }}</span>
+                </td>
+             
+                <td>
+                    <span class="d-flex align-items-center" [ngStyle]="{ 'margin-right.px': 4 }">
+                        <p-button icon="pi pi-upload" [rounded]="true" [outlined]="true" [ngStyle]="{ 'margin-right.px': 4, 'margin-bottom.px': 4 }" (click)="openNew(arriendo.id_arriendo)"></p-button>
+                        <p-button icon="pi pi-money-bill" [rounded]="true" [outlined]="true" severity="success" [ngStyle]="{ 'margin-right.px': 4, 'margin-bottom.px': 4 }" (click)="openPagoDialog(arriendo.id_arriendo)"></p-button>
+                        <p-button icon="pi pi-file-edit" [rounded]="true" [outlined]="true" severity="help" [ngStyle]="{ 'margin-right.px': 4, 'margin-bottom.px': 4 }"></p-button>
+                        <p-button icon="pi pi-dollar" [rounded]="true" [outlined]="true" severity="info" [ngStyle]="{ 'margin-right.px': 4, 'margin-bottom.px': 4 }"></p-button>
+                        <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="warning" [ngStyle]="{ 'margin-right.px': 4, 'margin-bottom.px': 4 }"></p-button>
+                    </span>
+                </td>
+                
+                
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No se han encontrado arriendos en proceso.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!--MODAL -->
+
+<!-- <p-dialog [(visible)]="subirArchivos" header="Detalle de arriendo N°{{ id_arriendo }}"[style]="{width: '1200px'}" header="" [modal]="true" styleClass="p-fluid" [appendTo]="'body'">
+    <ng-template pTemplate="content">
+        <div class="text-center">
+
+                <i class="pi pi-exclamation-circle mb-4" style="font-size: xxx-large; color: deepskyblue;"></i>
+                <h1>Detalle de arriendo</h1>
+           
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">TIPO DE ARRIENDO : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for=""> </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">CLIENTE : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for=""> </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">RUT : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for=""> </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">ENTREGA : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for=""></label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2 text-right">
+                    <label for="">RECEPCIÓN : </label>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="flex flex-column gap-2">
+                    <label for=""></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <h1>Verifique que los datos sean correctos</h1>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cerrar" icon="pi pi-times" class="p-button-text"(click)="hideDialog()" ></button>
+        <button pButton pRipple label="Aceptar" icon="pi pi-check" class="p-button-text" (click)="registrarArriendo()"></button>
+    </ng-template>
+</p-dialog> -->

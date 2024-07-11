@@ -1,0 +1,32 @@
+.evento-reserva {
+    margin-right: 2px;
+    padding: 5px;
+    background-color: aliceblue!important;
+    color: cornflowerblue!important;
+    margin: 2px!important;
+  }
+
+  .evento-hora{
+    font-weight: bold;
+    color: red;
+  }
+
+
+  .input-group{
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .sada{
+    color: rgb(165, 205, 241);
+  }
+
+  ::ng-deep .p-dropdown {
+    width: 100%;
+}

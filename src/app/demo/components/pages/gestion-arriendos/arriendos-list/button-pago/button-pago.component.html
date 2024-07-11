@@ -1,0 +1,88 @@
+<h2 mat-dialog-title>Arriendo N°{{ id_arriendo }}</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="grid-container3">
+        <div class="grid-item">
+            <div class="flex flex-column gap-2">
+                <h2>Datos del arriendo</h2>
+                <input type="text" pInputText disabled>
+                <input type="text" pInputText disabled>
+                <input type="text" pInputText disabled>
+                <input type="text" pInputText disabled>
+                <input type="text" pInputText disabled>
+                <input type="text" pInputText disabled>
+                <h2>Agregar mas detalles</h2>
+                <p>Digitado por</p>
+                <input type="text" pInputText disabled>
+                <textarea rows="5" cols="30" pInputTextarea></textarea>
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="flex flex-column gap-2">
+                <h2>Pago Cliente</h2>
+                <p>Valor neto copago / valor neto diario arriendo</p>
+                <input type="text" pInputText disabled>
+                <p>Sub Total neto</p>
+               
+                <input type="text" pInputText disabled>
+                <p-toast></p-toast>
+                <p-button class="mb-3" mat-button (click)="openDialog()" icon="pi pi-search" label="Agregar accesorios"></p-button>
+
+
+                <p>Descuento</p>
+                <input type="text" pInputText disabled>
+                <p>Total neto</p>
+                <input type="text" pInputText disabled>
+                <p>Iva ( $ 0 )</p>
+                <input type="text" pInputText disabled>
+                <p>Total a pagar ( $0 )</p>
+                <input type="text" pInputText disabled>
+
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="flex flex-column gap-2">
+                <h2>Facturación</h2>
+                <input type="text" pInputText disabled placeholder="Valor diario $0">
+                <h2>Precio</h2>
+                <div class="flex flex-wrap gap-3">
+                    <label>
+                        <input type="radio" name="radio-button" value="conductor1" disabled [(ngModel)]="selectedConductor"
+                              />
+                        <span class="spanConductores">Diario</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="radio-button" disabled value="conductor2" [(ngModel)]="selectedConductor"
+                            />
+                        <span class="spanConductores">Semanal</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="radio-button" disabled value="conductor3" [(ngModel)]="selectedConductor"
+                             />
+                        <span class="spanConductores">Quincenal</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="radio-button" disabled value="conductor4" [(ngModel)]="selectedConductor"
+                             />
+                        <span class="spanConductores">Mensual</span>
+                    </label>
+                </div>
+                
+                <p-button class="mt-2 mb-2" mat-button icon="pi pi-dollar" label="Solicitar Descuento"></p-button>
+                <h2>Tag - Pase Diario</h2>
+                <label for="">Valor diario</label>
+                <input type="text" pInputText disabled value=0>
+                <label for="">Cantidad de días</label>
+                <input type="text" pInputText disabled placeholder="0">
+                
+            </div>
+        </div>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <p-button label="Cerrar" icon="pi pi-times" [text]="true" mat-dialog-close severity="primary"></p-button>
+    <!-- <p-button label="Anular arriendo" icon="pi pi-trash" [text]="true" severity="primary"></p-button> -->
+  <p-button label="Registrar pago" icon="pi pi-check" [text]="true" severity="primary"></p-button>
+</mat-dialog-actions>

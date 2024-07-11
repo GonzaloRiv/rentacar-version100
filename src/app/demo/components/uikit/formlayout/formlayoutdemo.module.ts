@@ -13,8 +13,15 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
 import { MultiSelectModule } from "primeng/multiselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputTextModule } from "primeng/inputtext";
+import { MaterialModule } from 'src/app/material.module';
+import { PrimeNgModule } from 'src/app/PrimeNg.module';
+import { CalendarioReservasComponent } from './calendario-reservas/calendario-reservas.component';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
+import { ControlReservasComponent } from './control-reservas/control-reservas.component';
+import { MainReservasComponent } from './main-reservas/main-reservas.component';
 
 @NgModule({
+	declarations: [FormLayoutDemoComponent, CalendarioReservasComponent, ControlReservasComponent, MainReservasComponent],
 	imports: [
 		CommonModule,
 		FormsModule,
@@ -28,8 +35,12 @@ import { InputTextModule } from "primeng/inputtext";
 		CascadeSelectModule,
 		MultiSelectModule,
 		InputTextareaModule,
-		InputTextModule
+		InputTextModule,
+		MaterialModule,
+		PrimeNgModule,
+		FullCalendarModule,
 	],
-	declarations: [FormLayoutDemoComponent]
+	exports: [ FormLayoutDemoComponent ],
+	
 })
 export class FormLayoutDemoModule { }
